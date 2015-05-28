@@ -1,12 +1,13 @@
-FROM dockerfile/java:oracle-java8
+FROM java:8
 
 ENV DEBIAN_FRONTEND noninteractive
 
-ADD https://repo1.maven.org/maven2/com/facebook/presto/presto-server/0.93/presto-server-0.93.tar.gz /tmp/presto.tar.gz
+RUN wget https://repo1.maven.org/maven2/com/facebook/presto/presto-server/0.105/presto-server-0.105.tar.gz
+RUN mv presto-server-0.105.tar.gz presto.tar.gz
 
 RUN mkdir /opt/presto
-RUN tar -zxvf /tmp/presto.tar.gz -C /opt/presto --strip-components=1
-RUN rm /tmp/presto.tar.gz
+RUN tar -zxvf presto.tar.gz -C /opt/presto --strip-components=1
+RUN rm presto.tar.gz
 
 COPY config/* /opt/presto/etc/
 
